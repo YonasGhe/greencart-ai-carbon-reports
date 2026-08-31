@@ -8,7 +8,7 @@ Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
 Requires Plugins: woocommerce
-Stable tag: 1.3.3
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,6 +139,12 @@ No. VerdantCart Carbon Reports provides operational sustainability summaries and
 
 == Changelog ==
 
+= 1.4.0 =
+* NEW: WooCommerce dependency check with friendly one-click "Install/Activate WooCommerce" notice. Previously, sites without WooCommerce would install VerdantCart, see empty dashboards, and uninstall without knowing the requirement.
+* NEW: `Requires Plugins: woocommerce` header added to plugin file — WordPress 6.5+ now enforces the dependency natively (may auto-install WooCommerce for you).
+* FIX: `VCARB_VERSION` constant was stuck at 1.3.1 despite plugin header being 1.3.3. Now correctly reads 1.4.0.
+* No functional changes to carbon calculations, dashboards, or reporting features.
+
 = 1.3.3 =
 * NEW: Optional in-admin feedback prompt (after 7 days of use) that lets merchants email the solo maintainer directly with feature ideas or issues — offering a free Pro+ license as thanks for thoughtful feedback.
 * NEW: Optional in-admin prompt (after 14 days of use) describing what VerdantCart AI Pro adds — branded PDF reports, AI executive summaries, and one-click /carbon.txt publishing (Green Web Foundation v0.5 spec). Hidden automatically when the Pro plugin is active.
@@ -238,6 +244,9 @@ No. VerdantCart Carbon Reports provides operational sustainability summaries and
 * Backfill support for historical orders.
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+Adds a WooCommerce dependency check with a friendly one-click Install/Activate notice, so merchants without WooCommerce clearly see what VerdantCart needs instead of empty dashboards. Also uses the WordPress 6.5+ `Requires Plugins` header for native dependency handling. Fixes internal version constant that was stuck at 1.3.1. Recommended for all users.
 
 = 1.3.3 =
 Adds two optional dismissible admin prompts to bridge the gap between the free plugin and VerdantCart AI Pro. After 7 days, an "email the maintainer with feedback" prompt appears; after 14 days, a "meet VerdantCart Pro" prompt describes the paid tier (hidden when Pro is already installed). Both are per-user dismissible with a "Remind me later" snooze. No changes to carbon reporting features.

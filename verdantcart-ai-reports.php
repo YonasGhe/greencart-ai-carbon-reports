@@ -4,7 +4,7 @@
  * Plugin Name: VerdantCart Carbon Reports
  * Plugin URI: https://verdantcart.ai/
  * Description: Estimate WooCommerce order emissions and review carbon reports with dashboards, trends, exports, and product insights — all inside WordPress.
- * Version: 1.3.3
+ * Version: 1.4.0
  * Author: VerdantCart
  * Support: support@verdantcart.ai
  * Author URI: https://verdantcart.ai/
@@ -13,6 +13,7 @@
  * Requires at least: 6.4
  * Tested up to: 7.1
  * Requires PHP: 8.0
+ * Requires Plugins: woocommerce
  * WC requires at least: 8.0
  * WC tested up to: 10.6
  * License: GPL v2 or later
@@ -43,7 +44,7 @@ add_action('before_woocommerce_init', 'vcarb_declare_wc_compatibility');
  * Constants
  * ------------------------------------------------------------
  */
-defined('VCARB_VERSION') || define('VCARB_VERSION', '1.3.1');
+defined('VCARB_VERSION') || define('VCARB_VERSION', '1.4.0');
 defined('VCARB_DB_VERSION') || define('VCARB_DB_VERSION', '1.2.1');
 defined('VCARB_PLUGIN_FILE') || define('VCARB_PLUGIN_FILE', __FILE__);
 defined('VCARB_PLUGIN_DIR') || define('VCARB_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -126,6 +127,7 @@ function vcarb_require_files(): void
 
         'includes/class-vcarb-pro-upsell.php',
         'includes/class-vcarb-engagement-notices.php',
+        'includes/class-vcarb-woocommerce-check.php',
 
         'public/class-vcarb-dashboard.php',
     ];
@@ -488,6 +490,16 @@ function vcarb_bootstrap(): void
     // safe to call on the frontend too (they no-op outside wp-admin).
     if (class_exists('VCARB_Engagement_Notices')) {
         VCARB_Engagement_Notices::instance()->init();
+    }
+
+    // v1.4.0 — WooCommerce dependency check. Shows a friendly notice with
+    // Install/Activate CTA when WooCommerce is missing, since VerdantCart
+    // has nothing to work with in that state. This addresses the biggest
+    // retention gap identified in wp.org stats (721 downloads,
+    // <10 active installs — most likely cause is "installed on a WP site
+    // without WooCommerce, saw empty dashboards, uninstalled").
+    if (class_exists('VCARB_WooCommerce_Check')) {
+        VCARB_WooCommerce_Check::instance()->init();
     }
 }
 add_action('plugins_loaded', 'vcarb_bootstrap', 20);
